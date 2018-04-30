@@ -23,3 +23,10 @@ func NetworkDaemonDefaults() map[string]string {
 
 	return m
 }
+
+// MasterNodeDefaults - Returns the Masternode default config.
+func MasterNodeDefaults() map[string]string {
+	m := make(map[string]string)
+
+	return m
+}
