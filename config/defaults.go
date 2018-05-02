@@ -1,8 +1,7 @@
 package config
 
 import (
-	"log"
-	"os/user"
+	"os"
 	"runtime"
 )
 
@@ -11,9 +10,10 @@ import (
 // NetworkDaemonDefaults - Returns the network daemon's default config.
 func NetworkDaemonDefaults() map[string]string {
 	m := make(map[string]string)
-	usr, err := user.Current()
-	if err != nil {
-		log.Fatal(err)
+	user := os.Getenv("USER")
+	home := "/home/" + user
+	if user == "root" {
+		home = "/home/" + os.Getenv("SUDO_USER")
 	}
 
 	// TODO: Fix windows location
@@ -21,9 +21,9 @@ func NetworkDaemonDefaults() map[string]string {
 	case "windows":
 		m["ContentDirectory"] = "/.config/gladius/gladius-networkd"
 	case "linux":
-		m["ContentDirectory"] = usr.HomeDir + "/.config/gladius/gladius-content/"
+		m["ContentDirectory"] = home + "/.config/gladius/gladius-content/"
 	case "darwin":
-		m["ContentDirectory"] = usr.HomeDir + "/.config/gladius/gladius-content/"
+		m["ContentDirectory"] = home + "/.config/gladius/gladius-content/"
 	}
 
 	return m

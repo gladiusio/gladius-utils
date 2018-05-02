@@ -3,9 +3,7 @@ package config
 import (
 	"errors"
 	"fmt"
-	"log"
 	"os"
-	"os/user"
 	"runtime"
 	"strings"
 
@@ -54,17 +52,19 @@ func getOSPaths() (map[string]string, error) {
 	var err error
 	// TODO: Actually get correct filepath for macOS
 	if os.Getenv("GLADIUSCONF") == "" {
-		usr, err := user.Current()
-		if err != nil {
-			log.Fatal(err)
+		user := os.Getenv("USER")
+		home := "/home/" + user
+		if user == "root" {
+			home = "/home/" + os.Getenv("SUDO_USER")
 		}
+
 		switch runtime.GOOS {
 		case "windows":
 			m["config"] = "%APPDATA%/gladius/"
 		case "linux":
-			m["config"] = usr.HomeDir + "/.config/gladius/"
+			m["config"] = home + "/.config/gladius/"
 		case "darwin":
-			m["config"] = usr.HomeDir + "/.config/gladius/"
+			m["config"] = home + "/.config/gladius/"
 		default:
 			m["config"] = ""
 			err = errors.New("Unknown operating system")
