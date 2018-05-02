@@ -34,10 +34,12 @@ func SetupConfig(configName string, defaults map[string]string) {
 
 	err = viper.ReadInConfig() // Find and read the config file
 	// Should probably fix this...
-	if strings.HasPrefix(err.Error(), "Config File") {
-		fmt.Errorf("Cannot find config file: %s. Using defaults", err)
-	} else if err != nil { // Handle errors reading the config file
-		panic(fmt.Errorf("Fatal error config file: %s", err))
+	if err != nil {
+		if strings.HasPrefix(err.Error(), "Config File") {
+			fmt.Errorf("Cannot find config file: %s. Using defaults", err)
+		} else { // Handle errors reading the config file
+			panic(fmt.Errorf("Fatal error config file: %s", err))
+		}
 	}
 
 	viper.WatchConfig()
