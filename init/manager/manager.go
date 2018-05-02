@@ -70,6 +70,6 @@ func (p *program) Start(s service.Service) error {
 
 // Stop the program
 func (p *program) Stop(s service.Service) error {
-	fmt.Println("\nStoping....")
+	fmt.Println("\nStopping....")
 	return nil
 }
