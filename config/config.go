@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/user"
 	"runtime"
+	"strings"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
@@ -34,7 +35,10 @@ func SetupConfig(configName string, defaults map[string]string) {
 	}
 
 	err = viper.ReadInConfig() // Find and read the config file
-	if err != nil {            // Handle errors reading the config file
+	// Should probably fix this...
+	if strings.HasPrefix(err.Error(), "Config File") {
+		fmt.Errorf("Cannot find config file: %s. Using defaults", err)
+	} else if err != nil { // Handle errors reading the config file
 		panic(fmt.Errorf("Fatal error config file: %s", err))
 	}
 
