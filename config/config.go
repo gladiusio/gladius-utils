@@ -3,7 +3,9 @@ package config
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
+	"os/user"
 	"runtime"
 
 	"github.com/fsnotify/fsnotify"
@@ -48,13 +50,17 @@ func getOSPaths() (map[string]string, error) {
 	var err error
 	// TODO: Actually get correct filepath for macOS
 	if os.Getenv("GLADIUSCONF") == "" {
+		usr, err := user.Current()
+		if err != nil {
+			log.Fatal(err)
+		}
 		switch runtime.GOOS {
 		case "windows":
 			m["config"] = "%APPDATA%/gladius/"
 		case "linux":
-			m["config"] = os.Getenv("HOME") + "/.config/gladius/"
+			m["config"] = usr.HomeDir + "/.config/gladius/"
 		case "darwin":
-			m["config"] = os.Getenv("HOME") + "/.config/gladius/"
+			m["config"] = usr.HomeDir + "/.config/gladius/"
 		default:
 			m["config"] = ""
 			err = errors.New("Unknown operating system")
