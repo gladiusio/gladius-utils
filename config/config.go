@@ -3,6 +3,7 @@ package config
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"runtime"
 	"strings"
@@ -36,7 +37,7 @@ func SetupConfig(configName string, defaults map[string]string) {
 	// Should probably fix this...
 	if err != nil {
 		if strings.HasPrefix(err.Error(), "Config File") {
-			fmt.Errorf("Cannot find config file: %s. Using defaults", err)
+			log.Printf("Cannot find config file: %s. Using defaults", err)
 		} else { // Handle errors reading the config file
 			panic(fmt.Errorf("Fatal error config file: %s", err))
 		}
