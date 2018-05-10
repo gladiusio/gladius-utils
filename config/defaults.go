@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"runtime"
 )
 
@@ -19,6 +20,29 @@ func NetworkDaemonDefaults() map[string]string {
 	case "darwin":
 		m["ContentDirectory"] = "/etc/gladius/content/"
 	}
+
+	return m
+}
+
+func ControlDaemonDefaults() map[string]string {
+	m := make(map[string]string)
+
+	// TODO: Fix windows location
+	switch runtime.GOOS {
+	case "windows":
+		m["DirWallet"] = "/.config/gladius/wallet"
+		m["DirKeys"] = "/.config/gladius/keys"
+	case "linux":
+		m["DirWallet"] = os.Getenv("HOME") + "/.config/gladius/wallet"
+		m["DirKeys"] = os.Getenv("HOME") + "/.config/gladius/keys"
+	case "darwin":
+		m["DirWallet"] = os.Getenv("HOME") + "/.config/gladius/wallet"
+		m["DirKeys"] = os.Getenv("HOME") + "/.config/gladius/keys"
+	}
+
+	m["BlockchainMarketAddress"] = "0xc4dfb5c9e861eeae844795cfb8d30b77b78bbc38"
+	m["BlockchainNodeFactoryAddress"] = "0x85f0129d0b40b0ed15d97b657872b55cf91ae7de"
+	m["BlockchainProvider"] = "https://ropsten.infura.io/tjqLYxxGIUp0NylVCiWw"
 
 	return m
 }
