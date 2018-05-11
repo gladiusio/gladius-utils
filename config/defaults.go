@@ -18,7 +18,7 @@ func NetworkDaemonDefaults() map[string]string {
 	case "linux":
 		m["ContentDirectory"] = os.Getenv("HOME") + "/.config/gladius/content/"
 	case "darwin":
-		m["ContentDirectory"] = os.Getenv("HOME") + "/etc/gladius/content/"
+		m["ContentDirectory"] = os.Getenv("HOME") + "/.config/gladius/content/"
 	}
 
 	return m

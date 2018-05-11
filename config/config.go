@@ -59,9 +59,9 @@ func getOSPaths() (map[string]string, error) {
 		case "windows":
 			m["config"] = "%APPDATA%/gladius/"
 		case "linux":
-			m["config"] = "/etc/gladius"
+			m["config"] = "/.config/gladius"
 		case "darwin":
-			m["config"] = "/etc/gladius"
+			m["config"] = "/.config/gladius"
 		default:
 			m["config"] = ""
 			err = errors.New("Unknown operating system")
