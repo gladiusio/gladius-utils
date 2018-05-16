@@ -2,6 +2,7 @@ package config
 
 import (
 	"os"
+	"path/filepath"
 	"runtime"
 )
 
@@ -14,7 +15,7 @@ func NetworkDaemonDefaults() map[string]string {
 	// TODO: Fix windows location
 	switch runtime.GOOS {
 	case "windows":
-		m["ContentDirectory"] = "%HOMEPATH%/.gladius/content/"
+		m["ContentDirectory"] = filepath.Join(os.Getenv("HOMEDRIVE"), os.Getenv("HOMEPATH"), ".gladius/content")
 	case "linux":
 		m["ContentDirectory"] = os.Getenv("HOME") + "/.config/gladius/content/"
 	case "darwin":
@@ -30,8 +31,8 @@ func ControlDaemonDefaults() map[string]string {
 	// TODO: Fix windows location
 	switch runtime.GOOS {
 	case "windows":
-		m["DirWallet"] = "%HOMEPATH%/.gladius/wallet"
-		m["DirKeys"] = "%HOMEPATH%/.gladius/keys"
+		m["DirWallet"] = filepath.Join(os.Getenv("HOMEDRIVE"), os.Getenv("HOMEPATH"), ".gladius/wallet")
+		m["DirKeys"] = filepath.Join(os.Getenv("HOMEDRIVE"), os.Getenv("HOMEPATH"), ".gladius/keys")
 	case "linux":
 		m["DirWallet"] = os.Getenv("HOME") + "/.config/gladius/wallet"
 		m["DirKeys"] = os.Getenv("HOME") + "/.config/gladius/keys"

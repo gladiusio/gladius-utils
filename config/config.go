@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 
@@ -57,7 +58,7 @@ func getOSPaths() (map[string]string, error) {
 	if os.Getenv("GLADIUSCONF") == "" {
 		switch runtime.GOOS {
 		case "windows":
-			m["config"] = "%HOMEPATH%/.gladius"
+			m["config"] = filepath.Join(os.Getenv("HOMEDRIVE"), os.Getenv("HOMEPATH"), ".gladius")
 		case "linux":
 			m["config"] = os.Getenv("HOME") + "/.config/gladius"
 		case "darwin":
