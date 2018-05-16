@@ -14,7 +14,7 @@ func NetworkDaemonDefaults() map[string]string {
 	// TODO: Fix windows location
 	switch runtime.GOOS {
 	case "windows":
-		m["ContentDirectory"] = "/.config/gladius/gladius-networkd"
+		m["ContentDirectory"] = "%HOMEPATH%/.gladius/content/"
 	case "linux":
 		m["ContentDirectory"] = os.Getenv("HOME") + "/.config/gladius/content/"
 	case "darwin":
@@ -30,8 +30,8 @@ func ControlDaemonDefaults() map[string]string {
 	// TODO: Fix windows location
 	switch runtime.GOOS {
 	case "windows":
-		m["DirWallet"] = "/.config/gladius/wallet"
-		m["DirKeys"] = "/.config/gladius/keys"
+		m["DirWallet"] = "%HOMEPATH%/.gladius/wallet"
+		m["DirKeys"] = "%HOMEPATH%/.gladius/keys"
 	case "linux":
 		m["DirWallet"] = os.Getenv("HOME") + "/.config/gladius/wallet"
 		m["DirKeys"] = os.Getenv("HOME") + "/.config/gladius/keys"

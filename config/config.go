@@ -57,7 +57,7 @@ func getOSPaths() (map[string]string, error) {
 	if os.Getenv("GLADIUSCONF") == "" {
 		switch runtime.GOOS {
 		case "windows":
-			m["config"] = "%APPDATA%/gladius/"
+			m["config"] = "%HOMEPATH%/.gladius"
 		case "linux":
 			m["config"] = os.Getenv("HOME") + "/.config/gladius"
 		case "darwin":
