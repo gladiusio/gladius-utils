@@ -39,7 +39,7 @@ func getBase() []string {
 		log.Fatal(err)
 	}
 
-	return []string{"-b", base}
+	return []string{base}
 }
 
 // Run the program as a service
@@ -53,11 +53,14 @@ func runAsService(svcConfig *service.Config, run func()) {
 	// Check for arguments, if there are any set it to use controls like:
 	// "start", "stop", "install", "uninstall"
 	if len(os.Args) > 1 {
-		err = service.Control(s, os.Args[1])
-		if err != nil {
-			log.Fatal(err)
+		if os.Args[1] == "start" || os.Args[1] == "stop" || os.Args[1] == "install" || os.Args[1] == "uninstall" {
+			err = service.Control(s, os.Args[1])
+			if err != nil {
+				log.Fatal(err)
+			}
+			return // Don't execute the rest of the code
 		}
-		return // Don't execute the rest of the code
+
 	}
 
 	// Build loggers

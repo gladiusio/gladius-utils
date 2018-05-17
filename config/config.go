@@ -2,7 +2,6 @@ package config
 
 import (
 	"errors"
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -56,10 +55,19 @@ func GetGladiusBase() (string, error) {
 	var m string
 	var err error
 
-	var base = flag.String("b", "", "The base directory for the gladius node")
-	flag.Parse()
+	cmdArg := ""
 
-	if os.Getenv("GLADIUSBASE") == "" {
+	if len(os.Args) > 1 {
+		if os.Args[1] != "start" && os.Args[1] != "stop" && os.Args[1] != "install" && os.Args[1] != "uninstall" {
+			cmdArg = os.Args[1]
+		}
+	}
+
+	if cmdArg != "" {
+		m = cmdArg
+	} else if os.Getenv("GLADIUSBASE") != "" {
+		m = os.Getenv("GLADIUSBASE")
+	} else {
 		switch runtime.GOOS {
 		case "windows":
 			m = filepath.Join(os.Getenv("HOMEDRIVE"), os.Getenv("HOMEPATH"), ".gladius")
@@ -69,12 +77,8 @@ func GetGladiusBase() (string, error) {
 			m = os.Getenv("HOME") + "/.config/gladius"
 		default:
 			m = ""
-			err = errors.New("Unknown operating system, can't find gladius base directory. Set the GLADIUSBASE environment variable, or use the flag -b <base_dir> to add it manually.")
+			err = errors.New("unknown operating system, can't find gladius base directory. Set the GLADIUSBASE environment variable, or supply the directory as the first argument to add it manually")
 		}
-	} else if *base != "" {
-		m = *base
-	} else {
-		m = os.Getenv("GLADIUSBASE")
 	}
 
 	return m, err
