@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/gladiusio/gladius-utils/config"
 	"github.com/kardianos/service"
 )
 
@@ -26,10 +27,19 @@ func RunService(name string, displayName string, description string, run func())
 		Name:        name,
 		DisplayName: displayName,
 		Description: description,
-	}
+		Arguments:   getBase()}
 
 	// Run the function "run" as a service
 	runAsService(svcConfig, run)
+}
+
+func getBase() []string {
+	base, err := config.GetGladiusBase()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return []string{"-b", base}
 }
 
 // Run the program as a service

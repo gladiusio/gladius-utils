@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -22,12 +23,12 @@ func GetString(key string) string {
 func SetupConfig(configName string, defaults map[string]string) {
 	viper.SetConfigName(configName)
 
-	osPaths, err := getOSPaths()
+	base, err := GetGladiusBase()
 	if err != nil {
 		viper.AddConfigPath(".") // Search only for local config
 	} else {
 		viper.AddConfigPath(".")
-		viper.AddConfigPath(osPaths["config"]) // OS specifc
+		viper.AddConfigPath(base) // OS specifc
 	}
 
 	for key, value := range defaults {
@@ -50,25 +51,30 @@ func SetupConfig(configName string, defaults map[string]string) {
 	})
 }
 
-// getOSPaths - Returns a mapping like "config" -> "/config/path"
-func getOSPaths() (map[string]string, error) {
-	m := make(map[string]string)
+// GetGladiusBase - Returns the base directory
+func GetGladiusBase() (string, error) {
+	var m string
 	var err error
-	// TODO: Actually get correct filepath for macOS
-	if os.Getenv("GLADIUSCONF") == "" {
+
+	var base = flag.String("b", "", "The base directory for the gladius node")
+	flag.Parse()
+
+	if os.Getenv("GLADIUSBASE") == "" {
 		switch runtime.GOOS {
 		case "windows":
-			m["config"] = filepath.Join(os.Getenv("HOMEDRIVE"), os.Getenv("HOMEPATH"), ".gladius")
+			m = filepath.Join(os.Getenv("HOMEDRIVE"), os.Getenv("HOMEPATH"), ".gladius")
 		case "linux":
-			m["config"] = os.Getenv("HOME") + "/.config/gladius"
+			m = os.Getenv("HOME") + "/.config/gladius"
 		case "darwin":
-			m["config"] = os.Getenv("HOME") + "/.config/gladius"
+			m = os.Getenv("HOME") + "/.config/gladius"
 		default:
-			m["config"] = ""
-			err = errors.New("Unknown operating system")
+			m = ""
+			err = errors.New("Unknown operating system, can't find gladius base directory. Set the GLADIUSBASE environment variable, or use the flag -b <base_dir> to add it manually.")
 		}
+	} else if *base != "" {
+		m = *base
 	} else {
-		m["config"] = os.Getenv("GLADIUSCONF")
+		m = os.Getenv("GLADIUSBASE")
 	}
 
 	return m, err
