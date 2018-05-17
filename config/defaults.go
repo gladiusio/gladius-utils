@@ -26,8 +26,8 @@ func ControlDaemonDefaults() map[string]string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	m["DirWallet"] = filepath.Join(base, ".gladius/wallet")
-	m["DirKeys"] = filepath.Join(base, ".gladius/keys")
+	m["DirWallet"] = filepath.Join(base, "wallet")
+	m["DirKeys"] = filepath.Join(base, "keys")
 
 	m["BlockchainMarketAddress"] = "0xc4dfb5c9e861eeae844795cfb8d30b77b78bbc38"
 	m["BlockchainNodeFactoryAddress"] = "0x85f0129d0b40b0ed15d97b657872b55cf91ae7de"
