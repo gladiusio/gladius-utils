@@ -46,6 +46,21 @@ func CLIDefaults() map[string]string {
 // MasterNodeDefaults - Returns the Masternode default config.
 func MasterNodeDefaults() map[string]string {
 	m := make(map[string]string)
+	base, err := GetGladiusBase()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	m["PoolEthAddress"] = "0xDAcd582c3Ba1A90567Da0fC3f1dBB638D9438e06"
+
+	m["ControldHostname"] = "localhost"
+	m["ControldPort"] = "3001"
+	m["ControldProtocol"] = "http"
+
+	m["GeoIPDatabaseDir"] = filepath.Join(base, "geoip")
+	m["GeoIPDatabaseFile"] = "GeoLite2-City.mmdb"
+	m["GeoIPDatabaseMD5URL"] = "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz.md5"
+	m["GeoIPDatabaseURL"] = "http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz"
 
 	return m
 }
