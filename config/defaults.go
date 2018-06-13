@@ -3,6 +3,8 @@ package config
 import (
 	"log"
 	"path/filepath"
+
+	"github.com/spf13/viper"
 )
 
 // Default values below
@@ -46,6 +48,10 @@ func CLIDefaults() map[string]string {
 // MasterNodeDefaults - Returns the Masternode default config.
 func MasterNodeDefaults() map[string]string {
 	m := make(map[string]string)
+
+	viper.SetEnvPrefix("GLADIUSMN")
+	viper.BindEnv("ROUND_ROBIN")
+
 	base, err := GetGladiusBase()
 	if err != nil {
 		log.Fatal(err)
