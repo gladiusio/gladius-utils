@@ -41,6 +41,11 @@ func ControlDaemonDefaults() map[string]string {
 // CLIDefaults - Returns the CLI's default config.
 func CLIDefaults() map[string]string {
 	m := make(map[string]string)
+	base, err := GetGladiusBase()
+	if err != nil {
+		log.Fatal(err)
+	}
+	m["DirLogs"] = filepath.Join(base, "logs")
 
 	return m
 }
