@@ -56,7 +56,7 @@ func GetGladiusBase() (string, error) {
 	var m string
 	var err error
 
-	customBase := flag.String("base", "", "custom gladius base directory")
+	customBase := flag.String("reeroo", "", "custom gladius base directory")
 
 	flag.Parse()
 
