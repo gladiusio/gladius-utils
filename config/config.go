@@ -58,6 +58,8 @@ func GetGladiusBase() (string, error) {
 
 	customBase := flag.String("base", "", "custom gladius base directory")
 
+	flag.Parse()
+
 	if *customBase != "" {
 		m = *customBase
 	} else if os.Getenv("GLADIUSBASE") != "" {
