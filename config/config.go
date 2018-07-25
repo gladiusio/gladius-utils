@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -55,16 +56,10 @@ func GetGladiusBase() (string, error) {
 	var m string
 	var err error
 
-	cmdArg := ""
+	customBase := flag.String("base", "", "custom gladius base directory")
 
-	if len(os.Args) > 1 {
-		if os.Args[1] != "start" && os.Args[1] != "stop" && os.Args[1] != "install" && os.Args[1] != "uninstall" {
-			cmdArg = os.Args[1]
-		}
-	}
-
-	if cmdArg != "" {
-		m = cmdArg
+	if *customBase != "" {
+		m = *customBase
 	} else if os.Getenv("GLADIUSBASE") != "" {
 		m = os.Getenv("GLADIUSBASE")
 	} else {
