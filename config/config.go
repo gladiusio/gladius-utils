@@ -14,6 +14,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var customBase = flag.String("baseDir", "", "custom gladius base directory")
+
 // GetString - Wrapper around viper GetString
 func GetString(key string) string {
 	return viper.GetString(key)
@@ -55,8 +57,6 @@ func SetupConfig(configName string, defaults map[string]string) {
 func GetGladiusBase() (string, error) {
 	var m string
 	var err error
-
-	customBase := flag.String("reeroo", "", "custom gladius base directory")
 
 	flag.Parse()
 
