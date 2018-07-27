@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -12,6 +13,8 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
+
+var customBase = flag.String("baseDir", "", "custom gladius base directory")
 
 // GetString - Wrapper around viper GetString
 func GetString(key string) string {
@@ -55,16 +58,10 @@ func GetGladiusBase() (string, error) {
 	var m string
 	var err error
 
-	cmdArg := ""
+	flag.Parse()
 
-	if len(os.Args) > 1 {
-		if os.Args[1] != "start" && os.Args[1] != "stop" && os.Args[1] != "install" && os.Args[1] != "uninstall" {
-			cmdArg = os.Args[1]
-		}
-	}
-
-	if cmdArg != "" {
-		m = cmdArg
+	if *customBase != "" {
+		m = *customBase
 	} else if os.Getenv("GLADIUSBASE") != "" {
 		m = os.Getenv("GLADIUSBASE")
 	} else {

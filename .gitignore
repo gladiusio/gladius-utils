@@ -14,3 +14,6 @@
 .glide/
 
 vendor/
+
+# Main directory where you can run tests and such
+cmd/
