@@ -57,6 +57,7 @@ func MasterNodeDefaults() map[string]string {
 	viper.SetEnvPrefix("GLADIUSMN")
 	viper.BindEnv("ROUND_ROBIN")
 	viper.BindEnv("MININET_CONFIG")
+	viper.BindEnv("TEST_LOCAL")
 
 	base, err := GetGladiusBase()
 	if err != nil {
