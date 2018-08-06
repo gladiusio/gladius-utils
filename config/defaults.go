@@ -18,6 +18,9 @@ func NetworkDaemonDefaults() map[string]string {
 	}
 	m["ContentDirectory"] = filepath.Join(base, "content")
 	m["P2PSeedNodeAddress"] = "165.227.16.209"
+	m["ControldHostname"] = "localhost"
+	m["ControldPort"] = "3001"
+	m["ControldProtocol"] = "http"
 
 	return m
 }
