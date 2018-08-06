@@ -34,6 +34,7 @@ func ControlDaemonDefaults() map[string]string {
 	m["BlockchainMarketAddress"] = "0xc4dfb5c9e861eeae844795cfb8d30b77b78bbc38"
 	m["BlockchainNodeFactoryAddress"] = "0x85f0129d0b40b0ed15d97b657872b55cf91ae7de"
 	m["BlockchainProvider"] = "https://ropsten.infura.io/tjqLYxxGIUp0NylVCiWw"
+	m["PoolManagerAddress"] = "0x1f136d7b6308870ed334378f381c9f56d04c3aba" // Should not be hard baked in future
 
 	return m
 }
