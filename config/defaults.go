@@ -17,6 +17,7 @@ func NetworkDaemonDefaults() map[string]string {
 		log.Fatal(err)
 	}
 	m["ContentDirectory"] = filepath.Join(base, "content")
+	m["P2PSeedNodeAddress"] = "165.227.16.209"
 
 	return m
 }
