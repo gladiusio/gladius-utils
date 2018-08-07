@@ -2,7 +2,6 @@ package config
 
 import (
 	"errors"
-	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -14,7 +13,8 @@ import (
 	"github.com/spf13/viper"
 )
 
-var customBase = flag.String("baseDir", "", "custom gladius base directory")
+// coming soon
+// var customBase = flag.String("baseDir", "", "custom gladius base directory")
 
 // GetString - Wrapper around viper GetString
 func GetString(key string) string {
@@ -58,11 +58,13 @@ func GetGladiusBase() (string, error) {
 	var m string
 	var err error
 
-	flag.Parse()
+	// flag.Parse()
+	//
+	// if *customBase != "" {
+	// 	m = *customBase
+	// } else
 
-	if *customBase != "" {
-		m = *customBase
-	} else if os.Getenv("GLADIUSBASE") != "" {
+	if os.Getenv("GLADIUSBASE") != "" {
 		m = os.Getenv("GLADIUSBASE")
 	} else {
 		switch runtime.GOOS {
