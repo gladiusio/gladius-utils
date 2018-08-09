@@ -58,13 +58,17 @@ func GetGladiusBase() (string, error) {
 	var m string
 	var err error
 
-	// flag.Parse()
-	//
-	// if *customBase != "" {
-	// 	m = *customBase
-	// } else
+	cmdArg := ""
 
-	if os.Getenv("GLADIUSBASE") != "" {
+	if len(os.Args) > 1 {
+		if os.Args[1] != "start" && os.Args[1] != "stop" && os.Args[1] != "install" && os.Args[1] != "uninstall" {
+			cmdArg = os.Args[1]
+		}
+	}
+
+	if cmdArg != "" {
+		m = cmdArg
+	} else if os.Getenv("GLADIUSBASE") != "" {
 		m = os.Getenv("GLADIUSBASE")
 	} else {
 		switch runtime.GOOS {
