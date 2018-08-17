@@ -21,6 +21,7 @@ func NetworkDaemonDefaults() map[string]string {
 	m["ControldHostname"] = "localhost"
 	m["ControldPort"] = "3001"
 	m["ControldProtocol"] = "http"
+	m["LogLevel"] = "info"
 
 	return m
 }
