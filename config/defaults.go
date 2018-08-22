@@ -25,24 +25,6 @@ func NetworkDaemonDefaults() map[string]string {
 	return m
 }
 
-// ControlDaemonDefaults returns the default config for the control daemon
-func ControlDaemonDefaults() map[string]string {
-	m := make(map[string]string)
-	base, err := GetGladiusBase()
-	if err != nil {
-		log.Fatal(err)
-	}
-	m["DirWallet"] = filepath.Join(base, "wallet")
-	m["DirKeys"] = filepath.Join(base, "keys")
-
-	m["BlockchainMarketAddress"] = "0xc4dfb5c9e861eeae844795cfb8d30b77b78bbc38"
-	m["BlockchainNodeFactoryAddress"] = "0x85f0129d0b40b0ed15d97b657872b55cf91ae7de"
-	m["BlockchainProvider"] = "https://ropsten.infura.io/tjqLYxxGIUp0NylVCiWw"
-	m["PoolManagerAddress"] = "0x1f136d7b6308870ed334378f381c9f56d04c3aba" // Should not be hard baked in future
-
-	return m
-}
-
 // CLIDefaults - Returns the CLI's default config.
 func CLIDefaults() map[string]string {
 	m := make(map[string]string)
